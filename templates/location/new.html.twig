@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Location{% endblock %}
+
+{% block body %}
+    <h1>Create new Location</h1>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary mt-3">Zapisz</button>
+    {{ form_end(form) }}
+
+
+    <a href="{{ path('app_location_index') }}">back to list</a>
+{% endblock %}

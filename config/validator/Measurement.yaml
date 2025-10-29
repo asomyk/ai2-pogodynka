@@ -1,0 +1,27 @@
+App\Entity\Measurement:
+    properties:
+        temperature:
+            - NotBlank:
+                  message: 'Temperature value is required.'
+                  groups: ['create', 'edit']
+            - Range:
+                  min: -50
+                  max: 50
+                  notInRangeMessage: 'Temperature must be between {{ min }}°C and {{ max }}°C.'
+                  groups: ['create', 'edit']
+
+        humidity:
+            - NotBlank:
+                  message: 'Humidity value is required.'
+                  groups: ['create', 'edit']
+            - Range:
+                  min: 0
+                  max: 100
+                  notInRangeMessage: 'Humidity must be between {{ min }}% and {{ max }}%.'
+                  groups: ['create', 'edit']
+
+        location:
+            - NotBlank:
+                  message: 'Please select a location.'
+                  groups: ['create', 'edit']
+

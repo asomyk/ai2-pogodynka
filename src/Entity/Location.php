@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Measurement;
 use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,6 +23,7 @@ class Location
     #[ORM\Column(length: 2)]
     private ?string $country = null;
 
+    // decimal => Doctrine trzyma jako string (ok)
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 7)]
     private ?string $latitude = null;
 
@@ -29,20 +31,13 @@ class Location
     private ?string $longitude = null;
 
     /**
-     * @var Collection<int, Measurment>
-     */
-    #[ORM\OneToMany(targetEntity: Measurment::class, mappedBy: 'location')]
-    private Collection $measurments;
-
-    /**
      * @var Collection<int, Measurement>
      */
-    #[ORM\OneToMany(targetEntity: Measurement::class, mappedBy: 'location')]
+    #[ORM\OneToMany(mappedBy: 'location', targetEntity: Measurement::class)]
     private Collection $measurements;
 
     public function __construct()
     {
-        $this->measurments = new ArrayCollection();
         $this->measurements = new ArrayCollection();
     }
 
@@ -56,10 +51,9 @@ class Location
         return $this->city;
     }
 
-    public function setCity(string $city): static
+    public function setCity(string $city): self
     {
         $this->city = $city;
-
         return $this;
     }
 
@@ -68,10 +62,9 @@ class Location
         return $this->country;
     }
 
-    public function setCountry(string $country): static
+    public function setCountry(string $country): self
     {
         $this->country = $country;
-
         return $this;
     }
 
@@ -80,10 +73,9 @@ class Location
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): static
+    public function setLatitude(string $latitude): self
     {
         $this->latitude = $latitude;
-
         return $this;
     }
 
@@ -92,40 +84,9 @@ class Location
         return $this->longitude;
     }
 
-    public function setLongitude(string $longitude): static
+    public function setLongitude(string $longitude): self
     {
         $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Measurment>
-     */
-    public function getMeasurments(): Collection
-    {
-        return $this->measurments;
-    }
-
-    public function addMeasurment(Measurment $measurment): static
-    {
-        if (!$this->measurments->contains($measurment)) {
-            $this->measurments->add($measurment);
-            $measurment->setLocation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMeasurment(Measurment $measurment): static
-    {
-        if ($this->measurments->removeElement($measurment)) {
-            // set the owning side to null (unless already changed)
-            if ($measurment->getLocation() === $this) {
-                $measurment->setLocation(null);
-            }
-        }
-
         return $this;
     }
 
@@ -143,19 +104,16 @@ class Location
             $this->measurements->add($measurement);
             $measurement->setLocation($this);
         }
-
         return $this;
     }
 
     public function removeMeasurement(Measurement $measurement): static
     {
         if ($this->measurements->removeElement($measurement)) {
-            // set the owning side to null (unless already changed)
             if ($measurement->getLocation() === $this) {
                 $measurement->setLocation(null);
             }
         }
-
         return $this;
     }
 }

@@ -1,0 +1,10 @@
+{# templates/measurement/_form.html.twig #}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+  {{ form_row(form.temperature, {'label': 'Temperature (°C)'}) }}
+  {{ form_row(form.humidity, {'label': 'Humidity (%)'}) }}
+  {{ form_row(form.location, {'label': 'Location'}) }}
+
+<button class="btn btn-primary mt-3">
+    {{ button_label|default('Save') }}
+</button>
+{{ form_end(form) }}

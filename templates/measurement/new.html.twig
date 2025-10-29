@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Measurement{% endblock %}
+
+{% block body %}
+    <h1>Create new Measurement</h1>
+
+    {{ include('measurement/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary mt-3">Zapisz</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_measurement_index') }}">back to list</a>
+{% endblock %}
