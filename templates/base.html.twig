@@ -16,10 +16,17 @@
     <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
-            <a class="navbar-brand" href="{{ path('app_location_index') }}">🌦 Pogodynka</a>
-            <div class="navbar-nav">
+            <a class="navbar-brand" href="{{ path('app_location_index') }}">🌤 Pogodynka</a>
+
+            <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{{ path('app_location_index') }}">Lokalizacje</a>
                 <a class="nav-link" href="{{ path('app_measurement_index') }}">Pomiary</a>
+
+                {% if is_granted('ROLE_USER') %}
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
+                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                {% endif %}
             </div>
         </div>
     </nav>
